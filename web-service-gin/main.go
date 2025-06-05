@@ -35,8 +35,10 @@ func main() {
     router.POST("/albums", postAlbums)
     // Associate the /albums/:id path with the getAlbumByID function. 
     // In Gin, the colon preceding an item in the path signifies that the item is a path parameter.
-    router.GET("/albums/:id", getAlbumByID)
-
+    router.GET("/albums/id/:id", getAlbumByID)
+    
+    router.GET("/albums/artist/:artist", getAlbumsByArtist)
+    
     // Use the Run function to attach the router to an http.Server and start the server.
     router.Run("localhost:8080")
 }
@@ -85,4 +87,22 @@ func getAlbumByID(c *gin.Context){
     }
     
     c.IndentedJSON(http.StatusNotFound, gin.H{"message": "album not found"})
+}
+
+func getAlbumsByArtist(c *gin.Context){
+    artist := c.Param("artist")
+    
+    var filteredAlbums []album
+    
+    for _, album := range albums {
+        if album.Artist == artist {
+            filteredAlbums = append(filteredAlbums, album)
+        }
+    }   
+    
+    if len(filteredAlbums) > 0 {
+        c.IndentedJSON(http.StatusOK, filteredAlbums)    
+    } else {
+        c.IndentedJSON(http.StatusNotFound, gin.H{"message": "no albums by the artist in the collection"})
+    }
 }

@@ -27,3 +27,12 @@ curl http://localhost:8080/albums --include --header "Content-Type: application/
 ```bash
 curl http://localhost:8080/albums/4 --header "Content-Type: application/json" --request "GET"
 ```
+
+#### Return specific items by artist
+
+```bash
+curl http://localhost:8080/albums/artist/Sarah%20Vaughan --header "Content-Type: application/json" --request "GET"
+```
+
+ > **Note:** The artist's name is seperated with %20 instead of a space because %20 is the URL-encoded representation of a space character. 
+
