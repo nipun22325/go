@@ -25,7 +25,7 @@ curl http://localhost:8080/albums --include --header "Content-Type: application/
 #### Return a specific item by ID
 
 ```bash
-curl http://localhost:8080/albums/4 --header "Content-Type: application/json" --request "GET"
+curl http://localhost:8080/albums/id/4 --header "Content-Type: application/json" --request "GET"
 ```
 
 #### Return specific items by artist
