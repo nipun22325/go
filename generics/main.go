@@ -2,6 +2,17 @@ package main
 
 import "fmt"
 
+// Declare a type constraint as an interface. The constraint allows any type 
+// implementing the interface. For example, if you declare a type constraint 
+// interface with three methods, then use it with a type parameter in a generic 
+// function, type arguments used to call the function must have all of those 
+// methods.
+// "interface satisfaction" in Go.
+// Constraint interfaces can also refer to specific types like:
+type Number interface {
+    int64 | float64
+}
+
 func main() {
     ints := map[string]int64 {
         "first" : 34,
@@ -28,6 +39,10 @@ func main() {
     fmt.Printf("Generic Sums, type parameters inferred: %v and %v\n",
         SumIntsOrFloats(ints),
         SumIntsOrFloats(floats))
+        
+    fmt.Printf("Generic Sums, constraint as interface: %v and %v\n",
+        SumNumbers(ints),
+        SumNumbers(floats))
 }
 
 // SumInts adds together the values of m.
@@ -90,3 +105,10 @@ func SumIntsOrFloats[K comparable, V int64 | float64] (m map[K]V) V {
 // Using | specifies a union of the two types, meaning that this constraint 
 // allows either type.
 
+func SumNumbers[K comparable, V Number](m map[K]V) V {
+    var s V
+    for _, value := range m {
+        s += value
+    }
+    return s
+}
