@@ -14,9 +14,20 @@ func main() {
     }
     
     fmt.Printf("Non-Generic Sums: %v and %v\n",SumInts(ints),SumFloats(floats))
+
     fmt.Printf("Generic Sums: %v and %v\n",
         SumIntsOrFloats[string, int64](ints),
         SumIntsOrFloats[string, float64](floats))
+    
+    // You can omit type arguments in calling code when the Go compiler can 
+    // infer the types you want to use. The compiler infers type arguments from 
+    // the types of function arguments.
+    // If you needed to call a generic function that had no arguments, you 
+    // would need to include the type arguments in the function call.
+    
+    fmt.Printf("Generic Sums, type parameters inferred: %v and %v\n",
+        SumIntsOrFloats(ints),
+        SumIntsOrFloats(floats))
 }
 
 // SumInts adds together the values of m.
